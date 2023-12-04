@@ -1,10 +1,12 @@
 <template>
   <div class="box">
-    <van-button type="primary">主要按钮</van-button>
+    <icon class="icon-shequgouwu">主要按钮</icon>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import Icon from '@/components/Icon.vue'
+</script>
 
 <style lang="scss">
 .box {
