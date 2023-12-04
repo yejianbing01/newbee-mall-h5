@@ -1,5 +1,5 @@
-import './assets/main.css'
 import 'vant/lib/index.css';
+import '@/style/theme.scss'
 
 import 'lib-flexible/flexible'
 
