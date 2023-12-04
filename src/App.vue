@@ -8,9 +8,12 @@
 import Icon from '@/components/Icon.vue'
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import '@/style/mixin.scss';
+
 .box {
   width: 100px;
   height: 100px;
+  @include border-1px(#000);
 }
 </style>
