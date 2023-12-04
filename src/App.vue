@@ -2,6 +2,7 @@
   <div class="box">
     <icon class="icon-shequgouwu">主要按钮</icon>
   </div>
+  <router-view></router-view>
 </template>
 
 <script lang="ts" setup>
