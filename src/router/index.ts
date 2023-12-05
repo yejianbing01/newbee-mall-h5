@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    needNav?: boolean
+  }
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,6 +36,9 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
+      meta: {
+        needNav: false
+      },
       component: () => import('@/views/About.vue')
     }
   ]
