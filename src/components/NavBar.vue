@@ -34,7 +34,6 @@ import Icon from './Icon.vue'
 </template>
 
 <style lang="scss" scoped>
-@import '@/style/mixin.scss';
 .nav-bar {
   position: fixed;
   left: 0;
