@@ -18,5 +18,3 @@ router.beforeEach((to) => {
   <router-view></router-view>
   <nav-bar v-if="showNavBar"></nav-bar>
 </template>
-
-<style lang="scss"></style>

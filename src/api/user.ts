@@ -1,20 +1,20 @@
 // user.js
 import ajax from '@/utils/ajax' // 二次封装的 ajax
 
-type UserInfo = {
+export type UserInfo = {
   introduceSign: string
   loginName: string
   nickName: string
 }
 
-type LoginParam = {
+export type LoginParam = {
   loginName: string
   passwordMd5: string
 }
 
-type RegisterParam = {
+export type RegisterParam = {
   loginName: string
-  passwordMd5: string
+  password: string
 }
 
 // 获取用户信息

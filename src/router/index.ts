@@ -1,3 +1,4 @@
+import { getLocal } from '@/utils/localStage'
 import { createRouter, createWebHistory } from 'vue-router'
 
 declare module 'vue-router' {
@@ -40,8 +41,32 @@ const router = createRouter({
         needNav: false
       },
       component: () => import('@/views/About.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      meta: {
+        needNav: false
+      },
+      component: () => import('@/views/Register.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      meta: {
+        needNav: false
+      },
+      component: () => import('@/views/Login.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (['/login', '/register'].includes(to.path)) {
+    const token = getLocal('token')
+    token && next('/')
+  }
+  next()
 })
 
 export default router

@@ -8,12 +8,16 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Icon: typeof import('./src/components/Icon.vue')['default']
+    ImageVerify: typeof import('./src/components/ImageVerify.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SimpleHeader: typeof import('./src/components/SimpleHeader.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanCellGroup: typeof import('vant/es')['CellGroup']
+    VanField: typeof import('vant/es')['Field']
+    VanForm: typeof import('vant/es')['Form']
     X: typeof import('./src/components/x.vue')['default']
   }
 }
