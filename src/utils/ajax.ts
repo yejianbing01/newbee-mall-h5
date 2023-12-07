@@ -3,6 +3,8 @@ import axios from 'axios'
 import { showFailToast } from 'vant'
 import router from '@/router' // 引入路由组件实例，该实例可以直接操作路由的属性方法，如 router.push、router.goBack 等
 
+// 接口文档地址：http://backend-api-01.newbee.ltd/swagger-ui.html
+
 // baseURL 基础路径配置，backend-api-01.newbee.ltd/api/v1 为线上请求地址，这里只有一个地址，所以就不做区分
 axios.defaults.baseURL =
   import.meta.env.MODE == 'development'
