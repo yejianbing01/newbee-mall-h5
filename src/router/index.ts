@@ -1,5 +1,5 @@
 import { getLocal } from '@/utils/localStage'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -8,7 +8,7 @@ declare module 'vue-router' {
 }
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
