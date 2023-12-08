@@ -8,7 +8,6 @@ const state = reactive({
 })
 
 onMounted(() => {
-  console.log(getLocal('token'))
   state.isLogin = Boolean(getLocal('token'))
 })
 </script>

@@ -7,9 +7,21 @@ export type Carousel = {
   redirectUrl: string
 }
 
+export type PromotionGoods = {
+  goodsId: number
+  goodsName: string
+  goodsIntro: string
+  goodsCoverImg: string
+  sellingPrice: number
+  tag: string
+}
+
 /** 首页数据 */
 export type IndexInfo = {
   carousels: Array<Carousel>
+  hotGoodses: Array<PromotionGoods>
+  newGoodses: Array<PromotionGoods>
+  recommendGoodses: Array<PromotionGoods>
 }
 
 export const homeApi = {

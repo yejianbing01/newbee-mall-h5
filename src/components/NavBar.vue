@@ -39,6 +39,7 @@ import Icon from './Icon.vue'
   left: 0;
   bottom: 0;
   width: 100%;
+  height: 50px;
   padding: 5px 0;
   z-index: 1000;
   background: #fff;
