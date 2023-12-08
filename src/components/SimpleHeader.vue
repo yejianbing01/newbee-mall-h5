@@ -2,8 +2,9 @@
 import { useRouter } from 'vue-router'
 import Icon from './Icon.vue'
 
-type Props = { title: string }
-const props = defineProps<Props>()
+defineSlots<{
+  default(): string | HTMLElement
+}>()
 
 const router = useRouter()
 const onBack = () => router.back()
@@ -12,7 +13,7 @@ const onBack = () => router.back()
 <template>
   <header class="simple-header">
     <icon class="icon-back" @click="onBack"></icon>
-    <span>{{ props.title }}</span>
+    <slot></slot>
     <icon class="icon-more"></icon>
   </header>
 </template>

@@ -43,6 +43,7 @@ import Icon from './Icon.vue'
   padding: 5px 0;
   z-index: 1000;
   background: #fff;
+  border-top: 1px solid $primary;
   .nav-list {
     width: 100%;
     display: flex;
