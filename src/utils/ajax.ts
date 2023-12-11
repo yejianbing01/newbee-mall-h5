@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { showFailToast } from 'vant'
 import router from '@/router' // 引入路由组件实例，该实例可以直接操作路由的属性方法，如 router.push、router.goBack 等
+import { setLocal } from './localStage'
 
 // 接口文档地址：http://backend-api-01.newbee.ltd/swagger-ui.html
 
@@ -26,6 +27,7 @@ axios.interceptors.response.use((res) => {
     if (res.data.message) showFailToast(res.data.message)
     if (res.data.resultCode == 416) {
       // 返回 416 代表没有登录状态，路由跳转到/login 页面
+      setLocal('token', '')
       router.push({ path: '/login' })
     }
     if (res.data.data && window.location.hash == '#/login') {

@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import SimpleHeader from '@/components/SimpleHeader.vue'
 import CategorySearch from './CategorySearch.vue'
+import CategoryNav from './CategoryNav.vue'
+import CategoryList from './CategoryList.vue'
 import { categoryApi, type Category } from '@/api/category'
 import { onMounted } from 'vue'
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 
 type State = {
   categoryList: Array<Category>
@@ -11,7 +13,7 @@ type State = {
 }
 const state = reactive<State>({
   categoryList: [],
-  activeCategoryId: 1
+  activeCategoryId: 0
 })
 onMounted(async () => {
   const data = await categoryApi.getCategory()
@@ -19,7 +21,12 @@ onMounted(async () => {
   state.activeCategoryId = data[0].categoryId
 })
 
-const selectCategory = (categoryId: number) => (state.activeCategoryId = categoryId)
+const category2List = computed(() => {
+  return (
+    state.categoryList.find((item) => item.categoryId === state.activeCategoryId)
+      ?.secondLevelCategoryVOS || []
+  )
+})
 </script>
 
 <template>
@@ -28,15 +35,12 @@ const selectCategory = (categoryId: number) => (state.activeCategoryId = categor
       <category-search></category-search>
     </simple-header>
     <div class="category-box">
-      <ul class="category-nav">
-        <li
-          v-for="item in state.categoryList"
-          v-text="item.categoryName"
-          :key="item.categoryId"
-          :class="{ active: item.categoryId === state.activeCategoryId }"
-          @click="selectCategory(item.categoryId)"
-        ></li>
-      </ul>
+      <category-nav
+        :category-list="state.categoryList"
+        v-model:active-category-id="state.activeCategoryId"
+        class="category-box-nav"
+      ></category-nav>
+      <category-list :category2-list="category2List" class="category-box-content"></category-list>
     </div>
   </div>
 </template>
@@ -46,19 +50,11 @@ const selectCategory = (categoryId: number) => (state.activeCategoryId = categor
   height: 100%;
   overflow-y: auto;
   display: flex;
-  .category-nav {
-    width: 28%;
-    background: #f8f8f8;
-    li {
-      height: 56px;
-      text-align: center;
-      line-height: 56px;
-      font-size: 14px;
-      &.active {
-        color: $primary;
-        background-color: #fff;
-      }
-    }
+  &-nav {
+    flex: 3;
+  }
+  &-content {
+    flex: 7;
   }
 }
 </style>

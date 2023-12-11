@@ -1,0 +1,51 @@
+<script lang="ts" setup>
+import type { Category2 } from '@/api/category'
+import categoryImg from '@/assets/img/category.png'
+
+const props = defineProps<{ category2List: Array<Category2> }>()
+</script>
+
+<template>
+  <div class="category-list">
+    <div class="category-two" v-for="item in props.category2List" :key="item.categoryId">
+      <div class="category-two-name">{{ item.categoryName }}</div>
+      <ul class="category-three">
+        <li
+          v-for="category3 in item.thirdLevelCategoryVOS"
+          :key="category3.categoryId"
+          class="category-three-item"
+        >
+          <img :src="categoryImg" alt="分类" />
+          <span class="category-three-name">{{ category3.categoryName }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.category-list {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  .category-two-name {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .category-three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    &-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    img {
+      width: 28px;
+      margin-bottom: 10px;
+    }
+  }
+}
+</style>
