@@ -4,6 +4,7 @@ import Icon from './Icon.vue'
 
 defineSlots<{
   default(): string | HTMLElement
+  rightArea?(): string | HTMLElement
 }>()
 
 const router = useRouter()
@@ -13,8 +14,10 @@ const onBack = () => router.back()
 <template>
   <header class="simple-header">
     <icon class="icon-back" @click="onBack"></icon>
-    <slot></slot>
-    <icon class="icon-more"></icon>
+    <slot name="default"></slot>
+    <slot name="rightArea">
+      <icon class="icon-more"></icon>
+    </slot>
   </header>
 </template>
 
@@ -30,6 +33,7 @@ const onBack = () => router.back()
   padding: 0 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #fff;
   border-bottom: 1px solid #dcdcdc;
   color: #252525;

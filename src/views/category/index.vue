@@ -3,7 +3,7 @@ import SimpleHeader from '@/components/SimpleHeader.vue'
 import CategorySearch from './CategorySearch.vue'
 import CategoryNav from './CategoryNav.vue'
 import CategoryList from './CategoryList.vue'
-import { categoryApi, type Category } from '@/api/category'
+import { goodsApi, type Category } from '@/api/goods'
 import { onMounted } from 'vue'
 import { reactive, computed } from 'vue'
 
@@ -16,7 +16,7 @@ const state = reactive<State>({
   activeCategoryId: 0
 })
 onMounted(async () => {
-  const data = await categoryApi.getCategory()
+  const data = await goodsApi.getCategory()
   state.categoryList = data
   state.activeCategoryId = data[0].categoryId
 })
@@ -58,3 +58,4 @@ const category2List = computed(() => {
   }
 }
 </style>
+@/api/goods

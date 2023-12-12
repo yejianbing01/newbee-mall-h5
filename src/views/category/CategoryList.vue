@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Category2 } from '@/api/category'
+import type { Category2 } from '@/api/goods'
 import categoryImg from '@/assets/img/category.png'
 
 const props = defineProps<{ category2List: Array<Category2> }>()
@@ -49,3 +49,4 @@ const props = defineProps<{ category2List: Array<Category2> }>()
   }
 }
 </style>
+@/api/goods

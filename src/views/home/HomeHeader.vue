@@ -17,11 +17,11 @@ onMounted(() => {
     <router-link to="/category" class="menu">
       <icon class="icon-menu" />
     </router-link>
-    <div class="search">
+    <router-link to="/goods" class="search">
       <h1 class="title">新蜂商城</h1>
       <i class="line"></i>
       <span class="desc">山河无恙，人间皆安</span>
-    </div>
+    </router-link>
     <router-link to="/login" class="login-btn" v-if="!state.isLogin">登录</router-link>
     <router-link class="user-btn" to="./user" v-else>
       <icon class="icon-mine_wode"></icon>

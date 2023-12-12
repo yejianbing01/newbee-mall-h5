@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Category } from '@/api/category'
+import type { Category } from '@/api/goods'
 
 const props = defineProps<{
   categoryList: Array<Category>
@@ -39,3 +39,4 @@ const selectCategory = (categoryId: number) => {
   }
 }
 </style>
+@/api/goods

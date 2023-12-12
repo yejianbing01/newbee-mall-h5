@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { showFailToast } from 'vant'
 import router from '@/router' // 引入路由组件实例，该实例可以直接操作路由的属性方法，如 router.push、router.goBack 等
-import { setLocal } from './localStage'
+import { getLocal, setLocal } from './localStage'
 
 // 接口文档地址：http://backend-api-01.newbee.ltd/swagger-ui.html
 
@@ -14,7 +14,8 @@ axios.defaults.baseURL =
 // 跨域请求是要不要携带cookie，本课程没有跨域请求的情况
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers['token'] = localStorage.getItem('token') || ''
+console.log('token', getLocal('token'))
+axios.defaults.headers['token'] = getLocal('token') || ''
 // post 请求时，发送 json 形式的数据包
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
@@ -31,7 +32,7 @@ axios.interceptors.response.use((res) => {
       router.push({ path: '/login' })
     }
     if (res.data.data && window.location.hash == '#/login') {
-      localStorage.setItem('token', res.data.data)
+      setLocal('token', res.data.data)
       axios.defaults.headers['token'] = res.data.data
     }
     return Promise.reject(res.data)

@@ -43,6 +43,14 @@ const router = createRouter({
       component: () => import('@/views/About.vue')
     },
     {
+      path: '/goods',
+      name: 'goods',
+      meta: {
+        needNav: false
+      },
+      component: () => import('@/views/goodsList/index.vue')
+    },
+    {
       path: '/register',
       name: 'register',
       meta: {
