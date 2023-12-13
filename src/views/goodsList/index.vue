@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import { goodsApi, type Goods, type Orderby } from '@/api/goods'
+import { goodsApi, type Goods } from '@/api/goods'
 import SimpleHeader from '@/components/SimpleHeader.vue'
 import GoodsSearch from './GoodsSearch.vue'
-import { computed, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { showFailToast } from 'vant'
 
 const route = useRoute()
-const goodsCategoryId = route.query.categoryId ? Number(route.query.categoryId) : 45
+const goodsCategoryId = route.query.categoryId ? Number(route.query.categoryId) : undefined
 
 const state = reactive({
   totalCount: 0,
@@ -18,45 +19,64 @@ const state = reactive({
 })
 
 const searchParam = reactive({
-  orderBy: '' as Orderby,
-  searchToken: '',
+  orderBy: undefined,
+  keyword: undefined,
   pageNumber: 1,
   goodsCategoryId
 })
 
-watchEffect(async () => {
-  state.loading = true
-  const { totalCount, totalPage, list } = await goodsApi.findGoods(searchParam)
-  state.totalCount = totalCount
-  state.totalPage = totalPage
-  state.goodsList = state.goodsList.concat(list)
-  state.loading = false
-})
-
-watch([() => searchParam.orderBy, () => searchParam.searchToken], () => {
-  state.goodsList = []
-  searchParam.pageNumber = 1
-})
-
-const onLoad = () => {
-  searchParam.pageNumber += 1
-}
-
 const finished = computed(() => {
   return searchParam.pageNumber >= state.totalPage
 })
+
+watch(
+  () => searchParam.orderBy,
+  () => {
+    init()
+    findGoods()
+  }
+)
+
+const onLoad = async () => {
+  await findGoods()
+  searchParam.pageNumber += 1
+}
+
+const onSearch = () => {
+  init()
+  findGoods()
+}
+
+const init = () => {
+  state.goodsList = []
+  searchParam.pageNumber = 1
+}
+
+const findGoods = async () => {
+  try {
+    state.loading = true
+    const { totalCount, totalPage, list } = await goodsApi.findGoods(searchParam)
+    state.totalCount = totalCount
+    state.totalPage = totalPage
+    state.goodsList = state.goodsList.concat(list)
+  } catch (error) {
+    showFailToast('服务器忙，请稍后再试')
+  } finally {
+    state.loading = false
+  }
+}
 </script>
 
 <template>
   <div class="goods page">
     <simple-header>
-      <goods-search v-model.lazy="searchParam.searchToken" />
+      <goods-search v-model="searchParam.keyword" />
       <template #rightArea>
-        <button class="goods-search-btn">搜索</button>
+        <button class="goods-search-btn" @click="onSearch">搜索</button>
       </template>
     </simple-header>
     <van-tabs v-model:active="searchParam.orderBy" type="card">
-      <van-tab title="推荐" name=""></van-tab>
+      <van-tab title="推荐"></van-tab>
       <van-tab title="新品" name="new"></van-tab>
       <van-tab title="价格" name="price"></van-tab>
     </van-tabs>

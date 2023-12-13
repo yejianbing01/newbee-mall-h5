@@ -2,7 +2,7 @@
 import Icon from '@/components/Icon.vue'
 import { ref } from 'vue'
 const props = defineProps<{
-  modelValue: string
+  modelValue?: string
 }>()
 const value = ref(props.modelValue)
 

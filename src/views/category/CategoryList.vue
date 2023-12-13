@@ -1,8 +1,14 @@
 <script lang="ts" setup>
 import type { Category2 } from '@/api/goods'
 import categoryImg from '@/assets/img/category.png'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{ category2List: Array<Category2> }>()
+
+const router = useRouter()
+const onClickCategoryItem = (categoryId: number) => {
+  router.push(`/goods?categoryId=${categoryId}`)
+}
 </script>
 
 <template>
@@ -12,8 +18,9 @@ const props = defineProps<{ category2List: Array<Category2> }>()
       <ul class="category-three">
         <li
           v-for="category3 in item.thirdLevelCategoryVOS"
-          :key="category3.categoryId"
           class="category-three-item"
+          :key="category3.categoryId"
+          @click="onClickCategoryItem(category3.categoryId)"
         >
           <img :src="categoryImg" alt="分类" />
           <span class="category-three-name">{{ category3.categoryName }}</span>
