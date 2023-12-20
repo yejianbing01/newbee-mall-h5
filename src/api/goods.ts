@@ -32,6 +32,10 @@ export type Goods = {
   goodsIntro: string
   goodsCoverImg: string
   sellingPrice: number
+  tag?: string
+  goodsCarouselList?: string[]
+  originalPrice?: number
+  goodsDetailContent?: string
 }
 
 /** 商品api */
@@ -44,5 +48,10 @@ export const goodsApi = {
   /** 商品列表 */
   async findGoods(params: FindGoodsParam) {
     return ajax.get<DataListResponse<Goods>>('/search', { params }).then((res) => res.data)
+  },
+
+  /** 商品详情 */
+  async getGoodsDetail(id: number) {
+    return ajax.get<Goods>(`/goods/detail/${id}`).then((res) => res.data)
   }
 }

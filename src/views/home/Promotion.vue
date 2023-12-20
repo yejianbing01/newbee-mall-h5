@@ -1,18 +1,29 @@
 <script lang="ts" setup>
 import type { PromotionGoods } from '@/api/home'
+import { useRouter } from 'vue-router'
 
 type Props = {
   title: string
   promotionGoodsList: Array<PromotionGoods>
 }
 const props = defineProps<Props>()
+
+const router = useRouter()
+const onClickGoods = (id: number) => {
+  router.push(`/goods/${id}`)
+}
 </script>
 
 <template>
   <div class="promotion">
     <h2 class="title">{{ props.title }}</h2>
     <div class="goods-list">
-      <div class="goods" v-for="goods in props.promotionGoodsList" :key="goods.goodsId">
+      <div
+        class="goods"
+        v-for="goods in props.promotionGoodsList"
+        :key="goods.goodsId"
+        @click="onClickGoods(goods.goodsId)"
+      >
         <img :src="goods.goodsCoverImg" alt="" />
         <div class="desc">{{ goods.goodsName }}</div>
         <div class="price">￥{{ goods.sellingPrice }}</div>

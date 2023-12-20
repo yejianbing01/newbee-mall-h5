@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { useCartStore } from '@/stores/cart'
 import Icon from './Icon.vue'
+const cartStore = useCartStore()
 </script>
 
 <template>
@@ -19,7 +21,10 @@ import Icon from './Icon.vue'
       </li>
       <li class="nav-list-item">
         <router-link class="router-link" to="cart">
-          <icon class="icon-gouwuche"></icon>
+          <van-icon
+            name="shopping-cart-o"
+            :badge="!cartStore.cartCount ? '' : cartStore.cartCount"
+          />
           <span>购物车 </span>
         </router-link>
       </li>
