@@ -15,6 +15,11 @@ export type CartItem = {
   sellingPrice: number
 }
 
+export type ModifyCartDTO = {
+  cartItemId: number
+  goodsCount: number
+}
+
 /** 购物车api */
 export const cartApi = {
   /** 填加购物车 */
@@ -24,5 +29,12 @@ export const cartApi = {
   /** 购物车列表 */
   async getCart() {
     return ajax.get<CartItem[]>('/shop-cart').then((res) => res.data)
+  },
+  /** 删除购物车 */
+  async deleteCartItem(id: number) {
+    return ajax.delete(`/shop-cart/${id}`).then((res) => res.data)
+  },
+  async modifyCart(params: ModifyCartDTO) {
+    return ajax.put('/shop-cart', params)
   }
 }
