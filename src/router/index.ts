@@ -67,6 +67,22 @@ const router = createRouter({
       component: () => import('@/views/createOrder/index.vue')
     },
     {
+      path: '/address-list',
+      name: 'addressList',
+      meta: {
+        needNav: false
+      },
+      component: () => import('@/views/addressList/index.vue')
+    },
+    {
+      path: '/address-new',
+      name: 'addressNew',
+      meta: {
+        needNav: false
+      },
+      component: () => import('@/views/addressNew/index.vue')
+    },
+    {
       path: '/register',
       name: 'register',
       meta: {

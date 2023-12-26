@@ -22,8 +22,8 @@ declare module 'vue' {
     VanCellGroup: (typeof import('vant/es'))['CellGroup']
     VanCheckbox: typeof import('vant/es')['Checkbox']
     VanCheckboxGroup: typeof import('vant/es')['CheckboxGroup']
-    VanField: (typeof import('vant/es'))['Field']
-    VanForm: (typeof import('vant/es'))['Form']
+    VanField: typeof import('vant/es')['Field']
+    VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
     VanList: typeof import('vant/es')['List']
     VanStepper: typeof import('vant/es')['Stepper']
@@ -33,6 +33,7 @@ declare module 'vue' {
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
     VanTab: typeof import('vant/es')['Tab']
     VanTabs: typeof import('vant/es')['Tabs']
+    VanTag: typeof import('vant/es')['Tag']
     X: (typeof import('./src/components/x.vue'))['default']
   }
 }
