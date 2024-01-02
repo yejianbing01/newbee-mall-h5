@@ -1,16 +1,27 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { computed, defineProps, defineEmits } from 'vue'
+import type { Address } from '@/api/address'
+
+const { address } = defineProps<{ address: Address }>()
+
+const emit = defineEmits<{ onEdit: [id: number] }>()
+
+const fullAddress = computed(
+  () => `${address.provinceName} ${address.cityName} ${address.regionName} ${address.detailAddress}`
+)
+</script>
 
 <template>
   <div class="address-item">
     <div class="info">
       <div class="name-phone">
-        <span class="name">xxx</span>
-        <span class="phone">1111111111111</span>
-        <van-tag round type="primary">默认</van-tag>
+        <span class="name">{{ address.userName }}</span>
+        <span class="phone">{{ address.userPhone }}</span>
+        <van-tag round type="primary" v-if="address.defaultFlag">默认</van-tag>
       </div>
-      <div class="address">xxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssxxxxxxxxxxxxxxxxx</div>
+      <div class="address">{{ fullAddress }}</div>
     </div>
-    <div class="action-icon">
+    <div class="action-icon" @click="emit('onEdit', address.addressId)">
       <van-icon name="edit" />
     </div>
   </div>
