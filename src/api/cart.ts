@@ -30,6 +30,10 @@ export const cartApi = {
   async getCart() {
     return ajax.get<CartItem[]>('/shop-cart').then((res) => res.data)
   },
+  /** 根据购物车id查询购物车列表 */
+  async getByCartItemIds(params: { cartItemIds: string }) {
+    return ajax.get<CartItem[]>('/shop-cart/settle', { params }).then((res) => res.data)
+  },
   /** 删除购物车 */
   async deleteCartItem(id: number) {
     return ajax.delete(`/shop-cart/${id}`).then((res) => res.data)

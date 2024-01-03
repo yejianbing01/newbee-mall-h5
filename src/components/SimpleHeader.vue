@@ -7,8 +7,15 @@ defineSlots<{
   rightArea?(): string | HTMLElement
 }>()
 
+const emit = defineEmits<{
+  back: []
+}>()
+
 const router = useRouter()
-const onBack = () => router.back()
+const onBack = async () => {
+  router.back()
+  emit('back')
+}
 </script>
 
 <template>

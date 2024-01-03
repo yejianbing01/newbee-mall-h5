@@ -4,6 +4,7 @@ import Icon from '@/components/Icon.vue'
 import avatar from '@/assets/img/user-graduate.png'
 import { onMounted, ref } from 'vue'
 import { getUserInfo, type UserInfo } from '@/api/user'
+import { useRouter } from 'vue-router'
 
 const userInfo = ref<UserInfo>({
   loginName: '',
@@ -13,6 +14,9 @@ const userInfo = ref<UserInfo>({
 onMounted(async () => {
   await getUserInfo().then((res) => (userInfo.value = res.data))
 })
+
+const router = useRouter()
+const toAddressList = () => router.push('/address-list')
 </script>
 
 <template>
@@ -36,7 +40,7 @@ onMounted(async () => {
           <span>账号管理</span>
           <icon class="icon-a-jiantou-you" />
         </li>
-        <li>
+        <li @click="toAddressList">
           <span>地址管理</span>
           <icon class="icon-a-jiantou-you" />
         </li>

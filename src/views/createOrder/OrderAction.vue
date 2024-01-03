@@ -1,10 +1,12 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+defineProps<{ totalMoney?: number }>()
+</script>
 
 <template>
   <div class="order-action">
     <div class="total-money">
       <div class="title">商品金额</div>
-      <div class="price">￥1999</div>
+      <div class="price">￥{{ totalMoney }}</div>
     </div>
     <div class="order-btn">
       <van-button type="primary">生成订单</van-button>

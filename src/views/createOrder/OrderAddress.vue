@@ -1,13 +1,29 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { Address } from '@/api/address'
+import { defineProps } from 'vue'
+
+defineProps<{ address?: Address }>()
+
+const emit = defineEmits<{
+  click: []
+}>()
+</script>
 
 <template>
-  <div class="order-address">
+  <div class="order-address" @click="emit('click')">
     <div class="content">
-      <div class="name-phone">
-        <span class="name">xxx</span>
-        <span class="phone">12111111111</span>
+      <div class="address" v-if="address">
+        <div class="name-phone">
+          <span class="name">{{ address.userName }}</span>
+          <span class="phone">{{ address.userPhone }}</span>
+        </div>
+        <div class="address-detail">
+          {{ address.provinceName + ' ' + address.provinceName + ' ' + address.cityName }}
+        </div>
       </div>
-      <div class="address">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div>
+      <div class="add-address" v-else>
+        <van-icon name="plus" />
+      </div>
     </div>
     <div class="action-icon">
       <van-icon name="arrow" />
@@ -32,16 +48,22 @@
     flex: 1;
     overflow: hidden;
     margin-right: 20px;
-    .name-phone {
-      margin-bottom: 8px;
-      .name {
-        margin-right: 8px;
+    .address {
+      .name-phone {
+        margin-bottom: 8px;
+        .name {
+          margin-right: 8px;
+        }
+      }
+      .address-detail {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
-    .address {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    .add-address {
+      text-align: center;
+      font-size: 30px;
     }
   }
 

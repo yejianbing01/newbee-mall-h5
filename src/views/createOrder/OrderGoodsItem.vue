@@ -1,15 +1,20 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { CartItem } from '@/api/cart'
+
+defineProps<{ item: CartItem }>()
+</script>
+
 <template>
   <div class="order-goods-item">
     <div class="goods-img">
-      <img src="../../assets/6092.png" alt="" />
+      <img :src="item.goodsCoverImg" alt="" />
     </div>
     <div class="goods-desc">
       <div class="title-num">
-        <span class="title">xxxxxxxfafffffffffffffffffffffffffxxxxxx</span>
-        <span class="num">x5</span>
+        <span class="title">{{ item.goodsName }}</span>
+        <span class="num">x {{ item.goodsCount }}</span>
       </div>
-      <div class="price">￥199</div>
+      <div class="price">￥ {{ item.sellingPrice }}</div>
     </div>
   </div>
 </template>

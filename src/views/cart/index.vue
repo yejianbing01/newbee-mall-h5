@@ -8,7 +8,6 @@ import type { ModifyCartDTO } from '@/api/cart'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
 const cartStore = useCartStore()
 const selectAll = ref(false)
 const allCheckBoxRef = ref<CheckboxInstance>()
@@ -25,14 +24,6 @@ watch(
   }
 )
 
-const onAllCheckBoxClick = () => {
-  if (selectAll.value) {
-    selectIdList.value = cartStore.cartList.map((item) => item.cartItemId)
-  } else {
-    selectIdList.value = []
-  }
-}
-
 const selectPrice = computed(() => {
   const selectCart = cartStore.cartList.filter((item) =>
     selectIdList.value.includes(item.cartItemId)
@@ -42,6 +33,14 @@ const selectPrice = computed(() => {
     0
   )
 })
+
+const onAllCheckBoxClick = () => {
+  if (selectAll.value) {
+    selectIdList.value = cartStore.cartList.map((item) => item.cartItemId)
+  } else {
+    selectIdList.value = []
+  }
+}
 
 const onDeleteCartItem = async (id: number) => {
   await cartStore.deleteCartItem(id)
@@ -53,6 +52,11 @@ const onModifyCartItem = async (params: ModifyCartDTO) => {
 }
 
 const onGoHome = () => router.push('/')
+
+const onSubmit = () => {
+  if (!selectIdList.value.length) return
+  router.push(`/create-order?cartItemIds=${selectIdList.value.join(',')}`)
+}
 </script>
 
 <template>
@@ -68,7 +72,13 @@ const onGoHome = () => router.push('/')
           @modify-cart="onModifyCartItem"
         ></cart-item>
       </van-checkbox-group>
-      <van-submit-bar :price="selectPrice" button-text="提交订单">
+      <van-submit-bar
+        button-color="var(--van-primary-color)"
+        button-text="提交订单"
+        :price="selectPrice"
+        :disabled="!selectIdList.length"
+        @submit="onSubmit"
+      >
         <van-checkbox ref="allCheckBoxRef" v-model="selectAll" @click="onAllCheckBoxClick"
           >全选</van-checkbox
         >

@@ -3,15 +3,18 @@ import SimpleHeader from '@/components/SimpleHeader.vue'
 import { useRoute } from 'vue-router'
 import { areaList } from '@vant/area-data'
 import { showSuccessToast, type AddressEditInfo } from 'vant'
-import { addressApi, type Address } from '@/api/address'
-import { ref, watch } from 'vue'
+import { addressApi } from '@/api/address'
+import { ref } from 'vue'
 import { watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const route = useRoute()
 const id = route.query.id as string
 
 const onSave = async (content: AddressEditInfo) => {
   await addressApi.add({
+    id: +id,
     userName: content.name,
     userPhone: content.tel,
     provinceName: content.province,
@@ -21,9 +24,12 @@ const onSave = async (content: AddressEditInfo) => {
     defaultFlag: content.isDefault ? 1 : 0
   })
   showSuccessToast('地址保存成功')
+  router.back()
 }
-const onDelete = (value: AddressEditInfo) => {
-  console.log(value)
+const onDelete = async () => {
+  await addressApi.delete(+id)
+  showSuccessToast('删除成功')
+  router.back()
 }
 
 const addressDetail = ref<AddressEditInfo>()

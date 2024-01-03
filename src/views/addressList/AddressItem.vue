@@ -4,7 +4,10 @@ import type { Address } from '@/api/address'
 
 const { address } = defineProps<{ address: Address }>()
 
-const emit = defineEmits<{ onEdit: [id: number] }>()
+const emit = defineEmits<{
+  onEdit: [id: number]
+  click: [id: number]
+}>()
 
 const fullAddress = computed(
   () => `${address.provinceName} ${address.cityName} ${address.regionName} ${address.detailAddress}`
@@ -12,7 +15,7 @@ const fullAddress = computed(
 </script>
 
 <template>
-  <div class="address-item">
+  <div class="address-item" @click="emit('click', address.addressId)">
     <div class="info">
       <div class="name-phone">
         <span class="name">{{ address.userName }}</span>

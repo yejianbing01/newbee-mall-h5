@@ -4,6 +4,10 @@ import AddressItem from './AddressItem.vue'
 import { onMounted, ref } from 'vue'
 import { addressApi, type Address } from '@/api/address'
 import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
 
 const state = ref<{ addressList: Address[] }>({ addressList: [] })
 const getAddressList = async () => {
@@ -15,10 +19,15 @@ onMounted(() => {
   getAddressList()
 })
 
-const router = useRouter()
 const toAddressNew = () => router.push('/address-new')
 const toAddressEdit = (id: number) => {
   router.push(`/address-new?id=${id}`)
+}
+
+const onSelectAddress = (id: number) => {
+  const { from, cartItemIds } = route.query
+  if (!from) return
+  router.replace(`${from}?cartItemIds=${cartItemIds}&addressId=${id}`)
 }
 </script>
 
@@ -31,6 +40,7 @@ const toAddressEdit = (id: number) => {
         :key="address.addressId"
         :address="address"
         @onEdit="toAddressEdit"
+        @click="onSelectAddress"
       ></address-item>
     </div>
     <div class="address-new-btn">
