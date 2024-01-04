@@ -2,6 +2,8 @@
 import { useRouter } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import { ref } from 'vue'
+import 'vant/es/toast/style'
+
 const router = useRouter()
 
 const showNavBar = ref(true)

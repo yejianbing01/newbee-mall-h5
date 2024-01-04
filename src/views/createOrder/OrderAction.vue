@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 defineProps<{ totalMoney?: number }>()
+const emit = defineEmits<{
+  submit: []
+}>()
 </script>
 
 <template>
@@ -8,7 +11,7 @@ defineProps<{ totalMoney?: number }>()
       <div class="title">商品金额</div>
       <div class="price">￥{{ totalMoney }}</div>
     </div>
-    <div class="order-btn">
+    <div class="order-btn" @click="emit('submit')">
       <van-button type="primary">生成订单</van-button>
     </div>
   </div>

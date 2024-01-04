@@ -5,16 +5,20 @@ import OrderGoodsItem from './OrderGoodsItem.vue'
 import OrderAction from './OrderAction.vue'
 import { useRoute } from 'vue-router'
 import { onBeforeMount } from 'vue'
-import { showFailToast } from 'vant'
+import { showFailToast, showLoadingToast, showSuccessToast } from 'vant'
 import { useRouter } from 'vue-router'
 import { addressApi, type Address } from '@/api/address'
 import { ref } from 'vue'
 import { cartApi, type CartItem } from '@/api/cart'
 import { computed } from 'vue'
+import { orderApi } from '@/api/order'
+import { reactive } from 'vue'
+import { useCartStore } from '@/stores/cart'
 
 const router = useRouter()
 const route = useRoute()
 const { cartItemIds, addressId } = route.query as { cartItemIds: string; addressId: string }
+const cartStore = useCartStore()
 
 onBeforeMount(() => {
   checkCartItemId()
@@ -54,6 +58,36 @@ const totalMoney = computed(() => {
     0
   )
 })
+
+const orderInfo = reactive({ billNo: '', showPay: false })
+const createOrder = async () => {
+  if (!address.value) return
+  const billNo = await orderApi.createOrder({
+    addressId: address.value?.addressId,
+    cartItemIds: cartItemIds.split(',').map((id) => +id)
+  })
+  cartStore.getCartCount()
+  orderInfo.billNo = billNo
+  orderInfo.showPay = true
+}
+
+const onPayOrder = async (payType: 1 | 2) => {
+  if (!orderInfo.billNo) {
+    showFailToast('单据异常')
+    return router.push('/home')
+  }
+  await orderApi.payOrder({ orderNo: orderInfo.billNo, payType })
+  showLoadingToast({ message: '支付中...', duration: 2000 })
+  setTimeout(() => {
+    showSuccessToast('支付成功')
+    router.push('/order')
+  }, 2000)
+}
+
+const onCancelPay = () => {
+  router.push('/order')
+  return true
+}
 </script>
 
 <template>
@@ -67,7 +101,21 @@ const totalMoney = computed(() => {
         :item="item"
       ></order-goods-item>
     </div>
-    <order-action :total-money="totalMoney"></order-action>
+    <order-action :total-money="totalMoney" @submit="createOrder"></order-action>
+    <van-popup
+      v-model:show="orderInfo.showPay"
+      round
+      position="bottom"
+      :style="{ height: '30%' }"
+      :before-close="onCancelPay"
+    >
+      <div :style="{ width: '90%', margin: '0 auto', padding: '50px 0' }">
+        <van-button :style="{ marginBottom: '10px' }" color="#1989fa" block @click="onPayOrder(1)"
+          >支付宝支付</van-button
+        >
+        <van-button color="#4fc08d" block @click="onPayOrder(2)">微信支付</van-button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
