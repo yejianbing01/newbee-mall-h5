@@ -82,6 +82,15 @@ const router = createRouter({
       },
       component: () => import('@/views/addressNew/index.vue')
     },
+
+    {
+      path: '/order',
+      name: 'order',
+      meta: {
+        needNav: false
+      },
+      component: () => import('@/views/order/index.vue')
+    },
     {
       path: '/register',
       name: 'register',

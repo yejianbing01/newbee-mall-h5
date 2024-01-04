@@ -6,17 +6,19 @@ import { onMounted, ref } from 'vue'
 import { getUserInfo, type UserInfo } from '@/api/user'
 import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const userInfo = ref<UserInfo>({
   loginName: '',
   nickName: '',
   introduceSign: ''
 })
+
 onMounted(async () => {
   await getUserInfo().then((res) => (userInfo.value = res.data))
 })
 
-const router = useRouter()
 const toAddressList = () => router.push('/address-list')
+const toOrder = () => router.push('/order')
 </script>
 
 <template>
@@ -32,7 +34,7 @@ const toAddressList = () => router.push('/address-list')
         </div>
       </div>
       <ul class="user-list">
-        <li>
+        <li @click="toOrder">
           <span>我的订单</span>
           <icon class="icon-a-jiantou-you" />
         </li>

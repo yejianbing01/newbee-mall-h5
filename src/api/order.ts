@@ -10,13 +10,35 @@ export type PayOrderParam = {
   payType: 1 | 2
 }
 
+export type OrderListParam = {
+  pageNumber: number
+  status: string
+}
+
+export type OrderItem = {
+  orderId: number
+  orderNo: string
+  totalPrice: number
+  payType: number
+  orderStatus: number
+  orderStatusString: string
+  createTime: string
+  newBeeMallOrderItemVOS: {
+    goodsId: number
+    goodsCount: number
+    goodsName: string
+    goodsCoverImg: string
+    sellingPrice: number
+  }[]
+}
+
 export const orderApi = {
   async createOrder(params: CreateOrderParam) {
     return ajax.post<string>('/saveOrder', params).then((res) => res.data)
   },
   // 获取订单列表
-  async getOrderList(params) {
-    return ajax.get('/order', { params })
+  async getOrderList(params: OrderListParam) {
+    return ajax.get<DataListResponse<OrderItem>>('/order', { params }).then((res) => res.data)
   },
 
   // 根据 id 获取订单详情
